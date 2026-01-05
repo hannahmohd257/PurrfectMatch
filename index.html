@@ -46,10 +46,23 @@ function loadCat() {
 }
 
 function like() {
+  // Show heart popup briefly
+  showHeartPopup();
+
   let likedCats = JSON.parse(localStorage.getItem("likedCats")) || [];
   likedCats.push(catImage.src);
   localStorage.setItem("likedCats", JSON.stringify(likedCats));
   loadCat();
+}
+
+function showHeartPopup() {
+  const heart = document.getElementById("heartPopup");
+  heart.style.transform = "translate(-50%, -50%) scale(1)";
+  heart.style.opacity = 1;
+  setTimeout(() => {
+    heart.style.transform = "translate(-50%, -50%) scale(0)";
+    heart.style.opacity = 0;
+  }, 500); // visible for 0.5 seconds
 }
 
 function dislike() {
@@ -116,6 +129,18 @@ function renderLikes() {
     gallery.appendChild(img);
   });
 }
+
+<!-- Swipe View -->
+<div id="swipeView">
+  <div class="card">
+    <img id="catImage" />
+    <!-- New Like Button -->
+    <button id="likesBtn" onclick="showLikes()" class="likesButton">❤️ Liked Cats</button>
+    <!-- Heart Popup -->
+    <div id="heartPopup" class="heartPopup">❤️</div>
+  </div>
+</div>
+
 
 loadCat();
 </script>
