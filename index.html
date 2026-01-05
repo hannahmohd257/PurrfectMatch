@@ -10,7 +10,7 @@
 <body>
 
 <header>
-  <h1>Purrfect Match 🐱</h1>
+  <h1>Purrfect Match</h1>
 </header>
 
 <div class="container">
@@ -127,6 +127,15 @@ function renderLikes() {
 
 // Initial load
 loadCat();
+
+// Show instructions briefly on page load
+window.addEventListener("load", () => {
+  const instruction = document.getElementById("instruction");
+  setTimeout(() => {
+    instruction.classList.add("hidden");
+  }, 3000); // hides after 3 seconds
+});
+
 </script>
 
 </body>

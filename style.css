@@ -1,4 +1,9 @@
-/* General Reset */
+@font-face {
+  font-family: 'Meows';
+  src: url('fonts/Meows-VGWjy.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 * {
   box-sizing: border-box;
   margin: 0;
@@ -21,6 +26,7 @@ header {
 }
 
 h1 {
+  font-family: 'Meows', cursive;
   font-size: 2rem;
 }
 
@@ -74,6 +80,7 @@ h1 {
   background-color: #ff7f7f;
   color: #fff;
   transition: background-color 0.2s;
+  justify-content: center;
 }
 
 .likesButton:hover, .backButton:hover {
@@ -92,4 +99,22 @@ h1 {
   width: 180px;
   margin: 5px;
   border-radius: 10px;
+}
+
+.instruction {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(255, 127, 127, 0.9);
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 16px;
+  z-index: 100;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+.instruction.hidden {
+  opacity: 0;
 }
