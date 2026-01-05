@@ -27,7 +27,7 @@
       <div class="card behind-1">
         <img id="catImage2">
       </div>
-      <div class="card active">
+      <div class="card active" id="activeCard">
         <img id="catImage">
         <div id="heartPopup" class="heartPopup">❤️</div>
         <div id="headShake" class="headShake">🙂‍↔️</div>
@@ -48,6 +48,7 @@
 
 <script>
 const catImage = document.getElementById("catImage");
+const activeCard = document.getElementById("activeCard");
 const swipeView = document.getElementById("swipeView");
 const likesView = document.getElementById("likesView");
 const gallery = document.getElementById("gallery");
@@ -64,19 +65,39 @@ function randomCat() {
   return "https://cataas.com/cat?width=400&height=400&random=" + Date.now() + Math.random();
 }
 
-function loadInitialCats() {
-  cat1.src = randomCat();
-  cat2.src = randomCat();
-  cat3.src = randomCat();
+let imageQueue = [];
+
+function preloadImage() {
+  return new Promise(resolve => {
+    const img = new Image();
+    img.src = randomCat();
+    img.onload = () => resolve(img.src);
+  });
+}
+
+async function initQueue() {
+  imageQueue = [
+    await preloadImage(),
+    await preloadImage(),
+    await preloadImage()
+  ];
+
+  cat1.src = imageQueue[0];
+  cat2.src = imageQueue[1];
+  cat3.src = imageQueue[2];
 }
 
 function rotateCards() {
-  // Move images forward
-  cat1.src = cat2.src;
-  cat2.src = cat3.src;
-  cat3.src = randomCat();
-}
+  const nextSrc = randomCat();
+  const img = new Image();
+  img.src = nextSrc;
 
+  img.onload = () => {
+    cat1.src = cat2.src;
+    cat2.src = cat3.src;
+    cat3.src = nextSrc;
+  };
+}
 
 // Like a cat
 function like() {
@@ -144,7 +165,8 @@ function dragMove(e) {
   const diff = endX - startX;
 
   // Update image position in real-time
-  catImage.style.transform = `translateX(${diff}px) rotate(${diff / 10}deg)`;
+  // catImage.style.transform = `translateX(${diff}px) rotate(${diff / 10}deg)`;
+  activeCard.style.transform = `translateX(${diff}px) rotate(${diff / 10}deg)`;
 }
 
 // End dragging
@@ -175,15 +197,18 @@ function endDrag(e) {
 
 // Animate swipe
 function swipeAnimation(distance, callback) {
-  catImage.style.transform = `translateX(${distance}px) rotate(${distance / 10}deg)`;
-  catImage.style.opacity = 0;
+  activeCard.style.transition = "transform 0.3s ease, opacity 0.3s ease";
+  activeCard.style.transform = `translateX(${distance > 0 ? 600 : -600}px) rotate(${distance / 10}deg)`;
+  activeCard.style.opacity = 0;
 
   setTimeout(() => {
     callback(); // rotate images AFTER swipe
-    catImage.style.transform = "";
-    catImage.style.opacity = 1;
+    activeCard.style.transition = "";
+    activeCard.style.transform = "";
+    activeCard.style.opacity = 1;
   }, 300);
 }
+
 
 
 // Show liked cats view
@@ -212,7 +237,7 @@ function renderLikes() {
 }
 
 // Initial load
-loadInitialCats();
+initQueue();
 
 // Show instructions briefly on page load
 window.addEventListener("load", () => {

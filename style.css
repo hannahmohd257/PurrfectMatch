@@ -74,18 +74,21 @@ kucen {
 .card {
   position: absolute;
   width: 100%;
+  height: 420px; 
   border-radius: 12px;
   overflow: hidden;
   background: #fff;
   box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-  transition: transform 0.3s ease, opacity 0.3s ease;
-}
+  background: linear-gradient(135deg, #ffe6e6, #fff);
+
+} 
 
 .card img {
   width: 100%;
-  height: auto;
-  display: block;
+  height: 100%;
+  object-fit: cover;
 }
+ 
 
 .card.active {
   z-index: 3;
@@ -102,7 +105,6 @@ kucen {
   transform: scale(0.92) translateY(20px);
   opacity: 0.6;
 }
-
 
 #catImage {
   width: 100%;
