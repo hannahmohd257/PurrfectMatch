@@ -11,7 +11,6 @@
 
 <header>
   <h1>Purrfect Match 🐱</h1>
-  <button onclick="showLikes()">❤️</button>
 </header>
 
 <div class="container">
@@ -20,6 +19,10 @@
   <div id="swipeView">
     <div class="card">
       <img id="catImage" />
+      <!-- Heart Popup -->
+      <div id="heartPopup" class="heartPopup">❤️</div>
+      <!-- Liked Cats Button -->
+      <button id="likesBtn" onclick="showLikes()" class="likesButton">❤️ Liked Cats</button>
     </div>
   </div>
 
@@ -27,7 +30,7 @@
   <div id="likesView" class="hidden">
     <h2>Liked Cats ❤️</h2>
     <div class="gallery" id="gallery"></div>
-    <button onclick="back()">⬅ Back</button>
+    <button onclick="back()" class="backButton">⬅ Back</button>
   </div>
 
 </div>
@@ -41,20 +44,26 @@ const gallery = document.getElementById("gallery");
 let startX = 0;
 let endX = 0;
 
+// Load a random cat image
 function loadCat() {
   catImage.src = "https://cataas.com/cat?width=400&height=400&random=" + Date.now();
 }
 
+// Like a cat
 function like() {
-  // Show heart popup briefly
   showHeartPopup();
-
   let likedCats = JSON.parse(localStorage.getItem("likedCats")) || [];
   likedCats.push(catImage.src);
   localStorage.setItem("likedCats", JSON.stringify(likedCats));
   loadCat();
 }
 
+// Dislike a cat
+function dislike() {
+  loadCat();
+}
+
+// Show heart popup briefly
 function showHeartPopup() {
   const heart = document.getElementById("heartPopup");
   heart.style.transform = "translate(-50%, -50%) scale(1)";
@@ -62,45 +71,27 @@ function showHeartPopup() {
   setTimeout(() => {
     heart.style.transform = "translate(-50%, -50%) scale(0)";
     heart.style.opacity = 0;
-  }, 500); // visible for 0.5 seconds
+  }, 500);
 }
 
-function dislike() {
-  loadCat();
-}
+// Touch events
+catImage.addEventListener("touchstart", e => { startX = e.touches[0].clientX; });
+catImage.addEventListener("touchend", e => { endX = e.changedTouches[0].clientX; handleSwipe(); });
 
-// 📱 Touch
-catImage.addEventListener("touchstart", e => {
-  startX = e.touches[0].clientX;
-});
+// Mouse events
+catImage.addEventListener("mousedown", e => { startX = e.clientX; });
+catImage.addEventListener("mouseup", e => { endX = e.clientX; handleSwipe(); });
 
-catImage.addEventListener("touchend", e => {
-  endX = e.changedTouches[0].clientX;
-  handleSwipe();
-});
-
-// 🖱️ Mouse
-catImage.addEventListener("mousedown", e => {
-  startX = e.clientX;
-});
-
-catImage.addEventListener("mouseup", e => {
-  endX = e.clientX;
-  handleSwipe();
-});
-
+// Handle swipe logic
 function handleSwipe() {
   const diff = endX - startX;
-
-  if (diff > 80) {
-    swipeAnimation(300, like);
-  } else if (diff < -80) {
-    swipeAnimation(-300, dislike);
-  }
+  if (diff > 80) swipeAnimation(300, like);       // Swipe right
+  else if (diff < -80) swipeAnimation(-300, dislike); // Swipe left
 }
 
+// Animate swipe
 function swipeAnimation(distance, callback) {
-  catImage.style.transform = `translateX(${distance}px) rotate(${distance / 10}deg)`;
+  catImage.style.transform = `translateX(${distance}px) rotate(${distance/10}deg)`;
   catImage.style.opacity = 0;
   setTimeout(() => {
     catImage.style.transform = "";
@@ -109,39 +100,32 @@ function swipeAnimation(distance, callback) {
   }, 300);
 }
 
+// Show liked cats view
 function showLikes() {
   swipeView.classList.add("hidden");
   likesView.classList.remove("hidden");
   renderLikes();
 }
 
+// Back to swipe view
 function back() {
   likesView.classList.add("hidden");
   swipeView.classList.remove("hidden");
 }
 
+// Render liked cats gallery
 function renderLikes() {
   gallery.innerHTML = "";
   const likedCats = JSON.parse(localStorage.getItem("likedCats")) || [];
   likedCats.forEach(url => {
     const img = document.createElement("img");
     img.src = url;
+    img.className = "galleryImg";
     gallery.appendChild(img);
   });
 }
 
-<!-- Swipe View -->
-<div id="swipeView">
-  <div class="card">
-    <img id="catImage" />
-    <!-- New Like Button -->
-    <button id="likesBtn" onclick="showLikes()" class="likesButton">❤️ Liked Cats</button>
-    <!-- Heart Popup -->
-    <div id="heartPopup" class="heartPopup">❤️</div>
-  </div>
-</div>
-
-
+// Initial load
 loadCat();
 </script>
 
