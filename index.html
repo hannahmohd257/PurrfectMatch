@@ -106,7 +106,7 @@ function showHeartPopup() {
 
 // Show head shake briefly
 function showHeadShake() {
-  const heart = document.getElementById("headShake");
+  const headShake = document.getElementById("headShake");
   headShake.style.transform = "translate(-50%, -50%) scale(1)";
   headShake.style.opacity = 1;
   setTimeout(() => {
@@ -115,13 +115,6 @@ function showHeadShake() {
   }, 500);
 }
 
-// Touch events
-catImage.addEventListener("touchstart", e => { startX = e.touches[0].clientX; });
-catImage.addEventListener("touchend", e => { endX = e.changedTouches[0].clientX; startDrag(); });
-
-// Mouse events
-catImage.addEventListener("mousedown", e => { startX = e.clientX; });
-catImage.addEventListener("mouseup", e => { endX = e.clientX; startDrag(); });
 
 // Handle swipe logic
 // function handleSwipe() {
@@ -182,15 +175,16 @@ function endDrag(e) {
 
 // Animate swipe
 function swipeAnimation(distance, callback) {
-  // Already partially moved by drag, just finish swipe
   catImage.style.transform = `translateX(${distance}px) rotate(${distance / 10}deg)`;
   catImage.style.opacity = 0;
+
   setTimeout(() => {
+    callback(); // rotate images AFTER swipe
     catImage.style.transform = "";
     catImage.style.opacity = 1;
-    callback();
   }, 300);
 }
+
 
 // Show liked cats view
 function showLikes() {
@@ -218,7 +212,7 @@ function renderLikes() {
 }
 
 // Initial load
-loadCat();
+loadInitialCats();
 
 // Show instructions briefly on page load
 window.addEventListener("load", () => {
