@@ -1,11 +1,21 @@
 @font-face {
   font-family: 'Meows';
-  src: url('fonts/Meows.woff2') format('woff2'),
+  src: url('fonts/Meows-Regular.woff2') format('woff2'),
   url('fonts/Meows-Regular.woff') format('woff'),
-  url('fonts/Meows-Regular.ttf') format('truetype'); /* fallback */
+  url('fonts/Meows-VGWjy.ttf') format('truetype'); /* fallback */
   font-weight: normal;
   font-style: normal;
 }
+
+@font-face {
+  font-family: 'Kucen';
+  src: url('fonts/MeowsNepilIllustration-Rg.woff2') format('woff2'),
+  url('fonts/MeowsNepilIllustration-Rg.woff') format('woff'),
+  url('fonts/MeowsNepilIllustratioRegular-owjVq.ttf') format('truetype'); /* fallback */
+  font-weight: normal;
+  font-style: normal;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -29,7 +39,13 @@ header {
 
 h1 {
   font-family: 'Meows', cursive;
-  font-size: 2rem;
+  font-size: 2.5rem;
+}
+
+kucen {
+  font-family: 'Kucen', cursive;
+  font-size: 2.3rem;
+  padding-left: 10px;
 }
 
 .container {
@@ -74,15 +90,15 @@ h1 {
 /* Like button */
 .likesButton, .backButton {
   margin-top: 10px;
+  text-align: center;
   padding: 10px 16px;
   font-size: 16px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  background-color: #ff7f7f;
+  background-color: rgba(242, 205, 205, 0.9);
   color: #fff;
   transition: background-color 0.2s;
-  justify-content: center;
 }
 
 .likesButton:hover, .backButton:hover {
@@ -105,10 +121,10 @@ h1 {
 
 .instruction {
   position: fixed;
-  top: 20px;
+  top: 70px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: rgba(255, 127, 127, 0.9);
+  background-color: rgba(242, 205, 205, 0.9);
   color: #fff;
   padding: 12px 20px;
   border-radius: 8px;
