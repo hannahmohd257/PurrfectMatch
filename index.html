@@ -20,15 +20,21 @@
 
   <!-- Swipe View -->
   <div id="swipeView">
-    <div class="card">
-      <img id="catImage" />
-      <!-- Heart Popup -->
-      <div id="heartPopup" class="heartPopup">❤️</div>
-      <!-- HeadShake Popup -->
-      <div id="headShake" class="headShake">🙂‍↔️</div>
-      <!-- Liked Cats Button -->
-      <button id="likesBtn" onclick="showLikes()" class="likesButton">❤️ Liked Cats</button>
+    <div class="card-stack">
+      <div class="card behind-2">
+        <img id="catImage3">
+      </div>
+      <div class="card behind-1">
+        <img id="catImage2">
+      </div>
+      <div class="card active">
+        <img id="catImage">
+        <div id="heartPopup" class="heartPopup">❤️</div>
+        <div id="headShake" class="headShake">🙂‍↔️</div>
+      </div>
     </div>
+  
+    <button class="likesButton" onclick="showLikes()">❤️ Liked Cats</button>
   </div>
 
   <!-- Liked Cats View -->
@@ -50,23 +56,41 @@ let startX = 0;
 let endX = 0;
 
 // Load a random cat image
-function loadCat() {
-  catImage.src = "https://cataas.com/cat?width=350&height=400&random=" + Date.now();
+const cat1 = document.getElementById("catImage");
+const cat2 = document.getElementById("catImage2");
+const cat3 = document.getElementById("catImage3");
+
+function randomCat() {
+  return "https://cataas.com/cat?width=400&height=400&random=" + Date.now() + Math.random();
 }
+
+function loadInitialCats() {
+  cat1.src = randomCat();
+  cat2.src = randomCat();
+  cat3.src = randomCat();
+}
+
+function rotateCards() {
+  // Move images forward
+  cat1.src = cat2.src;
+  cat2.src = cat3.src;
+  cat3.src = randomCat();
+}
+
 
 // Like a cat
 function like() {
   showHeartPopup();
   let likedCats = JSON.parse(localStorage.getItem("likedCats")) || [];
-  likedCats.push(catImage.src);
+  likedCats.push(cat1.src);
   localStorage.setItem("likedCats", JSON.stringify(likedCats));
-  loadCat();
+  rotateCards();
 }
 
 // Dislike a cat
 function dislike() {
   showHeadShake();
-  loadCat();
+  rotateCards();
 }
 
 // Show heart popup briefly

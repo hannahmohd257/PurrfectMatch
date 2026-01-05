@@ -59,12 +59,50 @@ kucen {
 }
 
 /* Card styling */
-.card {
+/* .card {
   position: relative;
   width: 100%;
   margin: 0 auto 20px auto;
   text-align: center;
+} */
+
+.card-stack {
+  position: relative;
+  height: 420px;
 }
+
+.card {
+  position: absolute;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.card img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.card.active {
+  z-index: 3;
+}
+
+.card.behind-1 {
+  z-index: 2;
+  transform: scale(0.96) translateY(10px);
+  opacity: 0.8;
+}
+
+.card.behind-2 {
+  z-index: 1;
+  transform: scale(0.92) translateY(20px);
+  opacity: 0.6;
+}
+
 
 #catImage {
   width: 100%;
@@ -148,3 +186,4 @@ kucen {
 .instruction.hidden {
   opacity: 0;
 }
+
