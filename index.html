@@ -9,7 +9,7 @@
 
 <body>
 <header>
-  <h1>Purrfect Match<kucen>b</kucen></h1>
+  <h1>Purrfect Match<kucen>cb</kucen></h1>
 </header>
 <br>
 <div id="instruction" class="instruction">
@@ -24,6 +24,8 @@
       <img id="catImage" />
       <!-- Heart Popup -->
       <div id="heartPopup" class="heartPopup">❤️</div>
+      <!-- HeadShake Popup -->
+      <div id="headShake" class="headShake">🙂‍↔️</div>
       <!-- Liked Cats Button -->
       <button id="likesBtn" onclick="showLikes()" class="likesButton">❤️ Liked Cats</button>
     </div>
@@ -49,7 +51,7 @@ let endX = 0;
 
 // Load a random cat image
 function loadCat() {
-  catImage.src = "https://cataas.com/cat?width=400&height=400&random=" + Date.now();
+  catImage.src = "https://cataas.com/cat?width=350&height=400&random=" + Date.now();
 }
 
 // Like a cat
