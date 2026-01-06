@@ -104,21 +104,40 @@ function rotateCards() {
   };
 }
 
+let swipeCount = 0;
+const maxSwipes = 20; // limit to 20 cats
+
 // Like a cat
 function like() {
+  if (swipeCount >= maxSwipes) return; // do nothing if limit reached
+
   showHeartPopup();
   let likedCats = JSON.parse(localStorage.getItem("likedCats")) || [];
   likedCats.push(cat1.src);
   localStorage.setItem("likedCats", JSON.stringify(likedCats));
 
-  setTimeout(rotateCards, 300); // wait for popup
+  swipeCount++;
+  if (swipeCount < maxSwipes) {
+    setTimeout(rotateCards, 300);
+  } else {
+    alert("You have reached the 20 cat limit!");
+  }
 }
 
-// Dislike a cat
+// Disike a cat
 function dislike() {
+  if (swipeCount >= maxSwipes) return;
+
   showHeadShake();
-  setTimeout(rotateCards, 300); // wait for popup
+
+  swipeCount++;
+  if (swipeCount < maxSwipes) {
+    setTimeout(rotateCards, 300);
+  } else {
+    alert("You have reached the 20 cat limit!");
+  }
 }
+
 
 // Show heart popup briefly
 function showHeartPopup() {
@@ -215,8 +234,6 @@ function swipeAnimation(distance, callback) {
   }, 300);
 }
 
-
-
 // Show liked cats view
 function showLikes() {
   swipeView.classList.add("hidden");
@@ -233,14 +250,26 @@ function back() {
 // Render liked cats gallery
 function renderLikes() {
   gallery.innerHTML = "";
-  let likedCats = JSON.parse(localStorage.getItem("likedCats")) || [];
+
+  const likedCats = JSON.parse(localStorage.getItem("likedCats")) || [];
+
+  // Check if counter already exists
+  let counter = document.querySelector(".likedCounter");
+  if (!counter) {
+    counter = document.createElement("p");
+    counter.className = "likedCounter";
+    gallery.parentElement.insertBefore(counter, gallery);
+  }
+
+  // Update counter text
+  counter.textContent = `Liked Cats: ${likedCats.length}`;
 
   likedCats.forEach((url, index) => {
     const img = document.createElement("img");
     img.src = url;
     img.className = "galleryImg";
-    img.title = "Click to remove";
 
+    // Mobile-friendly remove on tap
     img.addEventListener("click", () => {
       if (confirm("Remove this cat from likes?")) {
         removeLike(index);

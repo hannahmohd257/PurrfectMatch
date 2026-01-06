@@ -242,3 +242,10 @@ kucen {
   margin: 8px 0;
 }
 
+.likedCounter {
+  text-align: center;
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
