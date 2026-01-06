@@ -39,10 +39,14 @@
 
   <!-- Liked Cats View -->
   <div id="likesView" class="hidden">
-    <h2>Liked Cats ❤️</h2><button onclick="back()" class="backButton">⬅ Back</button>
+    <div class="likesHeader">
+      <button onclick="back()" class="backButton fixedBack">⬅ Back</button>
+      <h2>Liked Cats ❤️</h2>
+    </div>
+  
     <div class="gallery" id="gallery"></div>
-    <button onclick="back()" class="backButton">⬅ Back</button>
   </div>
+  
 
 </div>
 
@@ -227,13 +231,30 @@ function back() {
 // Render liked cats gallery
 function renderLikes() {
   gallery.innerHTML = "";
-  const likedCats = JSON.parse(localStorage.getItem("likedCats")) || [];
-  likedCats.forEach(url => {
+  let likedCats = JSON.parse(localStorage.getItem("likedCats")) || [];
+
+  likedCats.forEach((url, index) => {
     const img = document.createElement("img");
     img.src = url;
     img.className = "galleryImg";
+    img.title = "Click to remove";
+
+    img.addEventListener("click", () => {
+      if (confirm("Remove this cat from likes?")) {
+        removeLike(index);
+      }
+    });
+
     gallery.appendChild(img);
   });
+}
+
+
+function removeLike(index) {
+  let likedCats = JSON.parse(localStorage.getItem("likedCats")) || [];
+  likedCats.splice(index, 1);
+  localStorage.setItem("likedCats", JSON.stringify(likedCats));
+  renderLikes();
 }
 
 // Initial load
@@ -247,7 +268,13 @@ window.addEventListener("load", () => {
   }, 3000); // hides after 3 seconds
 });
 
-</script>
+function showLikes() {
+  swipeView.classList.add("hidden");
+  likesView.classList.remove("hidden");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+  renderLikes();
+}
 
+</script>
 </body>
 </html>

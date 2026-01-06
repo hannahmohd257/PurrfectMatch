@@ -42,6 +42,11 @@ h1 {
   font-size: 2.5rem;
 }
 
+h2 {
+  font-size: 2.0rem;
+  text-align: center;
+}
+
 kucen {
   font-family: 'Kucen', cursive;
   font-size: 2.3rem;
@@ -140,9 +145,34 @@ kucen {
 }
 
 /* Like button */
-.likesButton, .backButton {
-  margin-top: 10px;
-  text-align: center;
+/* .likesButton, .backButton {
+  margin: 10px auto;
+  display: block;
+  padding: 10px 16px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: rgba(242, 205, 205, 0.9);
+  color: #fff;
+  transition: background-color 0.2s;
+} */
+
+.likesButton {
+  margin: 10px auto;
+  display: block;
+  padding: 10px 16px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: rgba(242, 205, 205, 0.9);
+  color: #fff;
+  transition: background-color 0.2s;
+}
+
+.backButton {
+  margin: 10px;
   padding: 10px 16px;
   font-size: 16px;
   border: none;
@@ -155,6 +185,22 @@ kucen {
 
 .likesButton:hover, .backButton:hover {
   background-color: #ff4f4f;
+}
+
+.likesHeader {
+  position: sticky;
+  top: 0;
+  background-color: #fff8f0;
+  padding: 10px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.fixedBack {
+  font-size: 14px;
+  padding: 8px 12px;
 }
 
 /* Liked cats gallery */
