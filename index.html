@@ -110,13 +110,14 @@ function like() {
   let likedCats = JSON.parse(localStorage.getItem("likedCats")) || [];
   likedCats.push(cat1.src);
   localStorage.setItem("likedCats", JSON.stringify(likedCats));
-  rotateCards();
+
+  setTimeout(rotateCards, 300); // wait for popup
 }
 
 // Dislike a cat
 function dislike() {
   showHeadShake();
-  rotateCards();
+  setTimeout(rotateCards, 300); // wait for popup
 }
 
 // Show heart popup briefly
