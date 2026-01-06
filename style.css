@@ -39,7 +39,7 @@ header {
 
 h1 {
   font-family: 'Meows', cursive;
-  font-size: 2.5rem;
+  font-size: 2.4rem;
 }
 
 h2 {
@@ -48,7 +48,7 @@ h2 {
 }
 
 kucen {
-  font-family: 'Kucen', cursive;
+  font-family: 'Kucen';
   font-size: 2.3rem;
   padding-left: 10px;
 }
@@ -233,5 +233,12 @@ kucen {
 }
 .instruction.hidden {
   opacity: 0;
+}
+
+.hint {
+  text-align: center;
+  font-size: 14px;
+  color: #777;
+  margin: 8px 0;
 }
 
